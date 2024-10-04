@@ -14,7 +14,7 @@ Credit-app is a simple backend-only CRUD application built using FastAPI for the
 1. **Clone the repository:**
 
     ```bash
-    git clone <repository_url>
+    git clone https://github.com/Jaskaran320/Credit-app.git
     cd credit-app
     ```
 
@@ -63,3 +63,4 @@ To run the tests, execute the following command in the root directory:
 
 ```bash
 pytest tests
+```
