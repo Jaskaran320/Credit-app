@@ -9,8 +9,11 @@ router = APIRouter()
 
 @router.get("/credits", response_model=List[Credit])
 async def get_all_credits(db: db_dependency, skip: int = 0, limit: int = 100):
-    credit_info = await credit_crud.get_credits(db, skip=skip, limit=limit)
-    return credit_info
+    try:
+        credit_info = await credit_crud.get_credits(db, skip=skip, limit=limit)
+        return credit_info
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
 @router.get("/credits/{company_id}", response_model=Credit)

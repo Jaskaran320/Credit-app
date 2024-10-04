@@ -10,8 +10,11 @@ router = APIRouter()
 
 @router.get("/annual_info/", response_model=List[AnnualInfo])
 async def read_annual_info(db: db_dependency, skip: int = 0, limit: int = 100):
-    info = await annual_info_crud.get_annual_info(db, skip=skip, limit=limit)
-    return info
+    try:
+        info = await annual_info_crud.get_annual_info(db, skip=skip, limit=limit)
+        return info
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
 @router.post("/annual_info/", response_model=AnnualInfo)

@@ -10,8 +10,11 @@ router = APIRouter()
 
 @router.get("/companies/", response_model=List[Company])
 async def read_companies(db: db_dependency, skip: int = 0, limit: int = 100):
-    companies = await company_crud.get_companies(db, skip=skip, limit=limit)
-    return companies
+    try:
+        companies = await company_crud.get_companies(db, skip=skip, limit=limit)
+        return companies
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
 @router.post("/companies/", response_model=Company)
